@@ -83,10 +83,15 @@ struct ContentView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .disabled(!isEnabled)
                 .padding(.bottom)
+                
+                let placeholder = NSAttributedString(
+                    string: "Password",
+                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.blue]
+                )
 
                 HStack(alignment: .center) {
                     ResponsiveTextField(
-                        placeholder: "Password",
+                        attributedPlaceholder: placeholder,
                         text: $password,
                         isSecure: hidePassword,
                         firstResponderDemand: $passwordResponderDemand.animation(),

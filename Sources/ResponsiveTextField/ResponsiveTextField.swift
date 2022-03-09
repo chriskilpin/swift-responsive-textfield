@@ -13,7 +13,10 @@ import CombineSchedulers
 ///
 public struct ResponsiveTextField {
     /// The text field placeholder string.
-    let placeholder: String
+    let placeholder: String?
+    
+    /// The text field placeholder attributed string.
+    let attributedPlaceholder: NSAttributedString?
 
     /// A binding to the text state that will hold the typed text
     let text: Binding<String>
@@ -123,7 +126,8 @@ public struct ResponsiveTextField {
     var standardEditActionHandler: StandardEditActionHandling<UITextField>?
 
     public init(
-        placeholder: String,
+        placeholder: String? = nil,
+        attributedPlaceholder: NSAttributedString? = nil,
         text: Binding<String>,
         isSecure: Bool = false,
         adjustsFontForContentSizeCategory: Bool = true,
@@ -137,6 +141,7 @@ public struct ResponsiveTextField {
         standardEditActionHandler: StandardEditActionHandling<UITextField>? = nil
     ) {
         self.placeholder = placeholder
+        self.attributedPlaceholder = attributedPlaceholder
         self.text = text
         self.firstResponderDemand = firstResponderDemand
         self.isSecure = isSecure
@@ -305,7 +310,14 @@ extension ResponsiveTextField: UIViewRepresentable {
         textField.handleDelete = handleDelete
         textField.supportedStandardEditActions = supportedStandardEditActions
         textField.standardEditActionHandler = standardEditActionHandler
-        textField.placeholder = placeholder
+        
+        if let placeholder = placeholder {
+            textField.placeholder = placeholder
+        }
+        if let attributedPlaceholder = attributedPlaceholder {
+            textField.attributedPlaceholder = attributedPlaceholder
+        }
+        
         textField.text = text.wrappedValue
         textField.isEnabled = isEnabled
         textField.isSecureTextEntry = isSecure
